@@ -1,8 +1,8 @@
 # PHP chat example
 
-An example of using the CppComet server to create a chat. For more information about CppComet, see http://comet-server.org
+:comet: An example of using the CppComet server to create a chat. For more information about CppComet, see http://comet-server.org
 
-[jsfiddle.net online demo](https://jsfiddle.net/o35kvmn2/5/)
+:comet: [jsfiddle.net online demo](https://jsfiddle.net/o35kvmn2/5/)
 
 ![php chat demo](https://github.com/CppComet/php-chat-example/blob/master/chat.gif)
 
@@ -20,7 +20,7 @@ Typical scheme of chat:
 
 # Step 1. Connecting to the comet server
 
-CppComet has cloud saas alternative that can be used for testing and demo access. In the following examples I will use demonstration access from comet-server.com for those who could not or were too lazy to deploy the server on their VPS
+CppComet has cloud saas alternative that can be used for testing and demo access. In the following examples I will use demonstration access from https://comet-server.com for those who could not or were too lazy to deploy the server on their VPS
 
 ```Login: 15
 Password:lPXBFPqNg3f661JcegBY0N0dPXqUBdHXqj2cHf04PZgLHxT6z55e20ozojvMRvB8
