@@ -2,13 +2,13 @@
 
 [Online demo](https://jsfiddle.net/o35kvmn2/5/)
 
-![php chat demo](https://github.com/Levhav/comet-server/blob/master/demo/chat-example/chat.gif)
+![php chat demo](https://github.com/CppComet/php-chat-example/blob/master/demo/chat-example/chat.gif)
 
 # Scheme of chat
 
 Typical scheme of chat:
 
-![scheme-of-chat](https://github.com/Levhav/comet-server/blob/master/demo/chat-example/scheme-of-chat.jpg)
+![scheme-of-chat](https://github.com/CppComet/php-chat-example/blob/master/demo/chat-example/scheme-of-chat.jpg)
 
 * Connecting to the comet server by websockets
 * Send ajax message for add new massage to chat
@@ -40,7 +40,7 @@ cometApi.start({node:"app.comet-server.ru", dev_id:15})
 * Send ajax query to php back-end
 * Send CometQL query for comet server
 
-[code of php back-end](https://github.com/Levhav/comet-server/blob/master/demo/chat-example/chat.php)
+[code of php back-end](https://github.com/CppComet/php-chat-example/blob/master/demo/chat-example/chat.php)
 
 Connection code to CppComet using MySQL protocol:
 ```
@@ -75,3 +75,4 @@ subscription Code to the pipe on comet server. This callback will be called when
 * [JavaScript API](http://comet-server.org/doku.php/en:comet:javascript_api)
 * [CometQL API](http://comet-server.org/doku.php/en:comet:cometql)
 * [Online demo](https://jsfiddle.net/o35kvmn2/5/)
+* [CppComet](https://github.com/CppComet/comet-server) 
