@@ -1,6 +1,7 @@
 # PHP chat example
 
-[Online demo](https://jsfiddle.net/o35kvmn2/5/)
+* An example of using the CppComet server to create a chat. For more information about CppComet, see http://comet-server.org
+* [jsfiddle.net online demo](https://jsfiddle.net/o35kvmn2/5/)
 
 ![php chat demo](https://github.com/CppComet/php-chat-example/blob/master/chat.gif)
 
