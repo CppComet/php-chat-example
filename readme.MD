@@ -19,10 +19,10 @@ Typical scheme of chat:
 * Send message to CppComet
 * CppComet send messages for all subscribers in pipe
 * Add message to database (optional)
-
+ 
 # Step 1. Connecting to the comet server
 
-CppComet has cloud saas alternative that can be used for testing and demo access. In the following examples I will use demonstration access from https://comet-server.com for those who could not or were too lazy to deploy the server on their VPS
+[CppComet](https://github.com/CppComet/comet-server) has cloud saas alternative that can be used for testing and demo access. In the following examples I will use demonstration access from https://comet-server.com for those who could not or were too lazy to [deploy the server on their VPS](https://github.com/CppComet/comet-server#building-from-source)
 
 ```Login: 15
 Password:lPXBFPqNg3f661JcegBY0N0dPXqUBdHXqj2cHf04PZgLHxT6z55e20ozojvMRvB8
