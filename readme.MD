@@ -1,5 +1,5 @@
 
-:comet: An example of using the CppComet server to create a chat. For more information about CppComet, see http://comet-server.org
+:comet: An example of using the [CppComet](https://github.com/CppComet/comet-server) server to create a chat. For more information about CppComet, see [documentation](http://comet-server.org)
 
 
 # PHP chat example
