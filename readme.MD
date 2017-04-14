@@ -4,7 +4,7 @@
 
 # PHP chat example
 
-[jsfiddle.net online demo](https://jsfiddle.net/o35kvmn2/5/)
+[jsfiddle.net online demo](https://jsfiddle.net/Levhav/o35kvmn2/17/)
 
 ![php chat demo](https://github.com/CppComet/php-chat-example/blob/master/chat.gif)
 
