@@ -1,0 +1,136 @@
+I want to tell you about my <a href="https://github.com/CppComet/comet-server">Open Source project of comet server</a>. It simplifies the process of creating chat and notifications for the site. 
+
+The CppComet takes care of all the work of maintaining websocket connections and give simple api for sending messages from backend to frontend by websockets.
+CppComet is written in C++ and can handle many simultaneous connections. Here are the <a href="https://comet-server.com/wiki/doku.php/en:comet:load-testing-result">results of load testing in 64,000 online connections</a> that I conducted.
+ 
+<h3>Features</h3>
+<ul>
+  <li>Api for more then 9 languages. CometQL API allows you connect to comet server by mysql protocol.</li>
+  <li>Supports users authenticating on the server</li>
+  <li>Allow sending a private message to users</li>
+  <li>Allows you to send public messages to users via channels</li>
+  <li>Allows subscription from JavaScript to changing other user’s status</li>
+  <li>Allows subscription to updates of online users list in real-time</li>
+  <li>Sending messages to channel from JS</li>
+  <li>Allows get information when users were online</li> 
+</ul>
+ 
+For testing CppComet without install on vps you can use free cloud service with same api. In the all examples I will use demonstration access from <a href="https://comet-server.com">comet-server.com</a> for those who could not or were too lazy to deploy the server on their vps.
+
+Demo access credentials:
+<code>Login: 15
+Password:lPXBFPqNg3f661JcegBY0N0dPXqUBdHXqj2cHf04PZgLHxT6z55e20ozojvMRvB8
+Host: app.comet-server.ru</code>
+
+<h3>How it works</h3>
+
+Comet technology – allows sending arbitrary messages to client through server initiative.
+
+Browser opens page of your site. And after loading this page JavaScript Api establishes a persistent connection to CppComet using websockets. While page is open, your server can send text message to client. It appeals via CometQL API to CppComet and transfer message for browser.
+
+<img src="https://github.com/CppComet/php-chat-example/raw/master/scheme-of-chat.jpg" alt="chat sheme" />
+
+<ol>
+  <li>Connecting to the comet server by websockets</li>
+  <li>Send ajax message for add new massage to chat</li>
+  <li>Send message to CppComet</li>
+  <li>CppComet send messages for all subscribers in pipe (and JavaScript API delivers this message to your callback.)</li>
+  <li>Add message to database (optional)</li>
+</ol>
+
+<h3>Chat example</h3>
+
+<ul>
+  <li><a href="https://github.com/CppComet/php-chat-example">Full code of this example in GitHub</a></li>
+  <li><a href="https://jsfiddle.net/Levhav/o35kvmn2/21/">Live online demo</a></li>
+</ul>
+
+<img src="https://raw.githubusercontent.com/CppComet/php-chat-example/master/chat.gif" alt="result chat on gif" />
+
+<h4><strong>Step 1. Connecting to the comet server</strong></h4>
+
+Code in <a href="https://github.com/CppComet/php-chat-example/blob/master/index.html">file index.html</a>
+
+To connect to the comet server from the JavaScript API, use the following command:
+
+<pre>cometApi.start({node:"app.comet-server.ru", dev_id:15})</pre>
+<ul>
+  <li>in parameter node - set hostname of your own server</li>
+  <li>parameter dev_id - use only if you use saas service comet-server.com</li>
+</ul>
+
+<h4><strong>Step 2. Send ajax message for add new massage to chat</strong></h4>
+
+<pre>
+var name = "my name";
+var text = "my text message";
+$.ajax({
+   url: "https://comet-server.com/doc/CppComet/chat-example/chat.php",
+   type: "POST", 
+   data:"text="+encodeURIComponent(text)+"&name="+encodeURIComponent(name)
+});
+</pre>
+
+<h4><strong>Step 3. send message to CppComet from php</strong></h4>
+
+Code in <a href="https://github.com/CppComet/php-chat-example/blob/master/chat.php">file chat.php</a>
+The code for sending a message to the pipe "simplechat" and event 'newMessage':
+
+<pre>
+
+// Demo access credentials
+$host = "app.comet-server.ru";
+$user = "15";
+$password = "lPXBFPqNg3f661JcegBY0N0dPXqUBdHXqj2cHf04PZgLHxT6z55e20ozojvMRvB8";
+
+// Connecting to CppComet (this is not MySQL database)
+$comet = mysqli_connect($host, $user, $password, "CometQL_v1");
+if(mysqli_errno($comet))
+{
+    echo "Error:".mysqli_error($link);
+}
+$msg = Array( "name" => $_POST["name"], "text"  => $_POST["text"] );
+$msg = json_encode($msg);
+$msg = mysqli_real_escape_string($comet, $msg);
+$query = "INSERT INTO pipes_messages (name, event, message)" .
+  "VALUES('simplechat', 'newMessage', '".$msg."')";
+ 
+// Sending message to CppComet (this is not MySQL database)
+mysqli_query($comet, $query); 
+if(mysqli_errno($comet))
+{
+    echo "Error:".mysqli_error($comet);
+} 
+else
+{
+    echo "ok";
+}
+</pre>
+
+<h4><strong>Step 4. Receive message from CppComet in JavaScript</strong></h4>
+
+Code in <a href="https://github.com/CppComet/php-chat-example/blob/master/index.html">file index.html</a>
+
+Subscription Code to the pipe on comet server. This callback will be called when somebody send message into channel `simplechat`
+
+<pre>cometApi.subscription("simplechat.newMessage", function(event){
+     alert(event.data.name+": "+event.data.text) 
+})
+</pre>
+
+<h3>Demo</h3>
+<ul>
+  <li>https://github.com/CppComet/php-chat-example</li>
+  <li>https://jsfiddle.net/Levhav/o35kvmn2/21/</li>
+  <li>https://cppcomet.github.io/comet-server/demo/simple-chat/simple-chat.html</li>
+  <li>https://github.com/CppComet/auth-example</li>
+</ul>
+
+<h3>Documentation</h3>
+<ul>
+  <li><a href="https://comet-server.com/wiki/doku.php/en:comet:building-from-source">Building from source and launch</a></li>
+  <li><a href="https://comet-server.com/wiki/doku.php/en:comet:cometql">CometQL API</a> documentation (To connect to the comet server api from any server-side language is used CometQL)</li>
+  <li><a href="https://comet-server.com/wiki/doku.php/en:comet:javascript_api#javascript_api">JavaScript API</a> documentation (To connect to the server from JavaScript)</li>
+</ul>
+
+With pleasure I will answer questions about the project.
